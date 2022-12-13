@@ -2,10 +2,16 @@ package client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
 
+    Chat chatSystem;
+
     public Main() {
+
+        chatSystem = new Chat();
 
         setSize(500, 500);
         setLocation(100, 100);
@@ -55,6 +61,16 @@ public class Main extends JFrame {
         chatField.setBounds(0,0,300,30);
         JButton chatTrans = new JButton("Send");
         chatTrans.setBounds(320,0,50,50);
+
+        connectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String host = hostField.getText();
+                int port = Integer.parseInt(portField.getText());
+
+                chatSystem.connect(host, port);
+            }
+        });
 
         chatSend.add(chatField);
         chatSend.add(chatTrans);

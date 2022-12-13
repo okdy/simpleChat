@@ -11,22 +11,19 @@ public class Chat implements Runnable {
     SocketAddress address;
     Socket sock;
 
-    public Chat(String host, int port) {
+    public void connect(String host, int port)  {
         address = new InetSocketAddress(host, port);
-        sock = new Socket();
-    }
-
-    public void connect() throws IOException {
-        sock.connect(address);
+        try {
+            sock.connect(address);
+        } catch (IOException e) {
+            System.out.println("sibal haha");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void run() {
-        try {
-            connect();
-        } catch (IOException e) {
-            System.out.println("connect is failed");
-        }
+
 
     }
 }
