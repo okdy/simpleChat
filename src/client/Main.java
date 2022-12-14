@@ -1,5 +1,7 @@
 package client;
 
+import common.ChatMember;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame {
 
     Chat chatSystem;
+    static ChatMember chatMember;
 
 //    Panel
     JPanel connectionPanel;
@@ -18,6 +21,7 @@ public class Main extends JFrame {
 //    TextField
     JTextField hostField;
     JTextField portField;
+    JTextField nicknameField;
     JTextField chattingInputField;
     static JTextArea chattingArea;
 
@@ -28,6 +32,7 @@ public class Main extends JFrame {
     public Main() {
 
         chatSystem = new Chat();
+
 
         setSize(500, 500);
         setLocation(100, 100);
@@ -54,6 +59,7 @@ public class Main extends JFrame {
 //        TextField
         hostField = new JTextField();
         portField = new JTextField();
+        nicknameField = new JTextField();
         chattingInputField = new JTextField();
         chattingArea = new JTextArea();
 
@@ -61,6 +67,8 @@ public class Main extends JFrame {
         hostField.setText("127.0.0.1");
         portField.setBounds(10, 70, 200, 20);
         portField.setText("1234");
+        nicknameField.setBounds(10, 100, 200, 20);
+        nicknameField.setText("김치킨");
         chattingInputField.setBounds(0,0,300,30);
         chattingArea.setBounds(0, 0, 300, 300);
 
@@ -74,6 +82,7 @@ public class Main extends JFrame {
 //        Final
         connectionPanel.add(hostField);
         connectionPanel.add(portField);
+        connectionPanel.add(nicknameField);
         connectionPanel.add(connectButton);
 
         textFieldPanel.add(chattingInputField);
@@ -89,11 +98,9 @@ public class Main extends JFrame {
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                chatMember = new ChatMember(nicknameField.getText());
                 String host = hostField.getText();
                 int port = Integer.parseInt(portField.getText());
-
-                System.out.println(host);
-                System.out.println(port);
 
                 chatSystem.connect(host, port);
             }
