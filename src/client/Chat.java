@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -13,10 +14,14 @@ public class Chat implements Runnable {
 
     public void connect(String host, int port)  {
         address = new InetSocketAddress(host, port);
+        sock = new Socket();
         try {
             sock.connect(address);
+
+            InputStream is = sock.getInputStream();
+            Main.chat.append("test\n");
         } catch (IOException e) {
-            System.out.println("sibal haha");
+            System.out.println("haha");
             throw new RuntimeException(e);
         }
     }
