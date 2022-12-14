@@ -8,7 +8,22 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame {
 
     Chat chatSystem;
-    public static JTextArea chat;
+
+//    Panel
+    JPanel connectionPanel;
+    JPanel chatListPanel;
+    JPanel userListPanel;
+    JPanel textFieldPanel;
+
+//    TextField
+    JTextField hostField;
+    JTextField portField;
+    JTextField chattingInputField;
+    static JTextArea chattingArea;
+
+//    Button
+    JButton connectButton;
+    JButton sendButton;
 
     public Main() {
 
@@ -16,61 +31,60 @@ public class Main extends JFrame {
 
         setSize(500, 500);
         setLocation(100, 100);
-
         this.setTitle("client");
         this.setLayout(null);
 
-        JPanel connectPanel = new JPanel();
+//        Panel
+        connectionPanel = new JPanel();
+        chatListPanel = new JPanel();
+        userListPanel = new JPanel();
+        textFieldPanel = new JPanel();
 
-        connectPanel.setBounds(0,0,500,120);
-        connectPanel.setLayout(null);
+        connectionPanel.setBounds(0,0,500,120);
+        connectionPanel.setLayout(null);
+        chatListPanel.setBounds(10, 100, 300, 300);
+        chatListPanel.setLayout(null);
+        chatListPanel.setBackground(Color.blue);
+        userListPanel.setBounds(310, 100, 150, 300);
+        userListPanel.setLayout(null);
+        userListPanel.setBackground(Color.red);
+        textFieldPanel.setBounds(10, 410, 500, 60);
+        textFieldPanel.setLayout(null);
 
-        JTextField hostField = new JTextField();
-        JTextField portField = new JTextField();
-        JButton connectButton = new JButton("Connect");
+//        TextField
+        hostField = new JTextField();
+        portField = new JTextField();
+        chattingInputField = new JTextField();
+        chattingArea = new JTextArea();
 
         hostField.setBounds(10, 40, 200, 20);
-        portField.setBounds(10, 70, 200, 20);
-        connectButton.setBounds(220, 10, 100, 100);
-
         hostField.setText("127.0.0.1");
+        portField.setBounds(10, 70, 200, 20);
         portField.setText("1234");
+        chattingInputField.setBounds(0,0,300,30);
+        chattingArea.setBounds(0, 0, 300, 300);
 
-        connectPanel.add(hostField);
-        connectPanel.add(portField);
-        connectPanel.add(connectButton);
+//        Button
+        connectButton = new JButton("Connect");
+        sendButton = new JButton("Send");
 
-        this.add(connectPanel);
+        connectButton.setBounds(220, 10, 100, 100);
+        sendButton.setBounds(320,0,50,50);
 
+//        Final
+        connectionPanel.add(hostField);
+        connectionPanel.add(portField);
+        connectionPanel.add(connectButton);
 
-        JPanel chatList = new JPanel();
-        JPanel userList = new JPanel();
+        textFieldPanel.add(chattingInputField);
+        textFieldPanel.add(sendButton);
 
-        chat = new JTextArea();
+        chatListPanel.add(chattingArea);
 
-        chatList.setBounds(10, 100, 300, 300);
-        chatList.setLayout(null);
-        userList.setBounds(310, 100, 150, 300);
-        userList.setLayout(null);
-
-        chat.setBounds(0, 0, 300, 300);
-
-        chatList.add(chat);
-
-        chatList.setBackground(Color.blue);
-        userList.setBackground(Color.red);
-
-        this.add(chatList);
-        this.add(userList);
-
-        JPanel chatSend = new JPanel();
-        chatSend.setBounds(10, 410, 500, 60);
-        chatSend.setLayout(null);
-
-        JTextField chatField = new JTextField();
-        chatField.setBounds(0,0,300,30);
-        JButton chatTrans = new JButton("Send");
-        chatTrans.setBounds(320,0,50,50);
+        this.add(connectionPanel);
+        this.add(chatListPanel);
+        this.add(userListPanel);
+        this.add(textFieldPanel);
 
         connectButton.addActionListener(new ActionListener() {
             @Override
@@ -85,18 +99,14 @@ public class Main extends JFrame {
             }
         });
 
-        chatSend.add(chatField);
-        chatSend.add(chatTrans);
-
-        this.add(chatSend);
-
         setVisible(true);
     }
 
     public static void main(String[] args) {
-
         new Main();
-
     }
 
+    public static void appendChatting(String format) {
+        chattingArea.append(format);
+    }
 }
