@@ -1,7 +1,8 @@
 package client;
 
-import java.io.IOException;
-import java.io.InputStream;
+import common.ChatMember;
+
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -15,14 +16,30 @@ public class Chat implements Runnable {
     public void connect(String host, int port)  {
         address = new InetSocketAddress(host, port);
         sock = new Socket();
+
         try {
             sock.connect(address);
+            OutputStream outputStream = sock.getOutputStream();
 
-            InputStream is = sock.getInputStream();
-            Main.chat.append("test\n");
+            outputStream.write(setMessageBytes(Main.chatMember, "하하..."));
+            outputStream.close();
         } catch (IOException e) {
             System.out.println("haha");
             throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] setMessageBytes(ChatMember chatMember, String message) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+
+        chatMember.setMessage(message);
+
+        try (byteArrayOutputStream) {
+            try (objectOutputStream) {
+                objectOutputStream.writeObject(chatMember);
+                return byteArrayOutputStream.toByteArray();
+            }
         }
     }
 
