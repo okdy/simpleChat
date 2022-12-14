@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame {
 
     Chat chatSystem;
+    public static JTextArea chat;
 
     public Main() {
 
@@ -32,6 +33,9 @@ public class Main extends JFrame {
         portField.setBounds(10, 70, 200, 20);
         connectButton.setBounds(220, 10, 100, 100);
 
+        hostField.setText("127.0.0.1");
+        portField.setText("1234");
+
         connectPanel.add(hostField);
         connectPanel.add(portField);
         connectPanel.add(connectButton);
@@ -42,10 +46,16 @@ public class Main extends JFrame {
         JPanel chatList = new JPanel();
         JPanel userList = new JPanel();
 
+        chat = new JTextArea();
+
         chatList.setBounds(10, 100, 300, 300);
         chatList.setLayout(null);
         userList.setBounds(310, 100, 150, 300);
         userList.setLayout(null);
+
+        chat.setBounds(0, 0, 300, 300);
+
+        chatList.add(chat);
 
         chatList.setBackground(Color.blue);
         userList.setBackground(Color.red);
@@ -67,6 +77,9 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String host = hostField.getText();
                 int port = Integer.parseInt(portField.getText());
+
+                System.out.println(host);
+                System.out.println(port);
 
                 chatSystem.connect(host, port);
             }
