@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,12 +19,19 @@ public class SocketProcess implements Runnable {
 
         while (true) {
             Socket socket = serverSocket.accept();
+            OutputStream os = socket.getOutputStream();
+            os.write("sibal".getBytes());
+            socket.close();;
         }
     }
 
     @Override
     public void run() {
-
+        try {
+            socketOpen();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
